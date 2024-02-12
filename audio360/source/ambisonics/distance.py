@@ -26,6 +26,7 @@ class SphericalAmbisonicsVisualizer(object):
         # Setup decoder
         # Create decoder using mesh
         ambi_order = np.sqrt(data.shape[1]) - 1
+        # the decoder's default ordering is ACN, which is WYZX, same as AmbiX
         self.decoder = AmbiDecoder(mesh_p, AmbiFormat(ambi_order=ambi_order, sample_rate=rate), method='projection')
 
         # Compute spherical energy averaged over consecutive chunks of "window" secs

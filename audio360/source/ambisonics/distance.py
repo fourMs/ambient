@@ -1,7 +1,7 @@
 """source: https://github.com/pedro-morgado/spatialaudiogen/blob/master/pyutils/ambisonics/distance.py"""
 import numpy as np
 # from itertools import izip
-from .common import AmbiFormat
+from .common import AmbiFormat, convert_ordering, CHANNEL_ORDERING, normalization_factor, NORMALIZATION
 from .decoder import AmbiDecoder
 # from .pyutils.iolib.position import read_position_file
 from .position import Position, MovingSource
@@ -16,7 +16,7 @@ def spherical_mesh(angular_res):
 
 class SphericalAmbisonicsVisualizer(object):
     """Creates audio energy maps given ambisonics data"""
-    def __init__(self, data, rate=22050, window=0.1, angular_res=2.0):
+    def __init__(self, data, rate=22050, window=0.1, angular_res=2.0, ordering='ACN', normalization='SN3D'):
         self.window = window
         self.angular_res = angular_res
         self.data = data
@@ -26,8 +26,23 @@ class SphericalAmbisonicsVisualizer(object):
         # Setup decoder
         # Create decoder using mesh
         ambi_order = np.sqrt(data.shape[1]) - 1
-        # the decoder's default ordering is ACN, which is WYZX, same as AmbiX
-        self.decoder = AmbiDecoder(mesh_p, AmbiFormat(ambi_order=ambi_order, sample_rate=rate), method='projection')
+        n = data.shape[1]
+
+        # convert ordering to ACN
+        if ordering != 'ACN':
+            assert ordering in CHANNEL_ORDERING
+            mapping = map(lambda x: convert_ordering(x, 'ACN', ordering), range(n))
+            self.data = self.data[:, list(mapping)]
+
+        # convert normalization to SN3D
+        if normalization != 'SN3D':
+            assert normalization in NORMALIZATION
+            c_out = np.array(list(map(lambda x: normalization_factor(x, 'ACN', 'SN3D'), range(n))))
+            c_in = np.array(list(map(lambda x: normalization_factor(x, 'ACN', normalization), range(n))))
+            self.data *= (c_out / c_in).reshape((1, -1))
+
+        ambif = AmbiFormat(ambi_order=ambi_order, sample_rate=rate, ordering='ACN', normalization='SN3D')
+        self.decoder = AmbiDecoder(mesh_p, ambif, method='projection')
 
         # Compute spherical energy averaged over consecutive chunks of "window" secs
         self.window_frames = int(self.window * rate)

@@ -31,6 +31,9 @@ class AmbiFormat(object):
 
 class AmbisonicArray(object):
     def __init__(self, data, ambi_format=AmbiFormat()):
+        """
+        
+        """
         self.data = data
         self.format = ambi_format
 
@@ -50,7 +53,7 @@ class AmbisonicArray(object):
         # reorder
         if ordering is not None and ordering != self.format.ordering:
             assert ordering in CHANNEL_ORDERING
-            mapping = map(lambda x: convert_ordering(x, ordering, self.format.ordering), range(n))
+            mapping = map(lambda x: convert_ordering(x, ordering, self.format.ordering), range(n)) #TODO: is this correct? orig_ordering, dest_ordering seems reversed
             data = data[:, mapping]
             self.format.ordering = ordering
 
@@ -154,9 +157,9 @@ def normalization_factor(index, ordering=DEFAULT_ORDERING, normalization=DEFAULT
         return sn3d_norm(order, degree)
 
 
-def spherical_harmonic_mn(order, degree, phi, nu, normalization=DEFAULT_NORMALIZATION):
+def spherical_harmonic_mn(order, degree, phi, nu, normalization=DEFAULT_NORMALIZATION, ordering=DEFAULT_ORDERING):
     from scipy.special import lpmv
-    norm = normalization_factor(degree_order_to_index(order, degree), normalization=normalization)
+    norm = normalization_factor(degree_order_to_index(order, degree, ordering), normalization=normalization)
     sph = (-1)**degree * norm * \
         lpmv(abs(degree), order, np.sin(nu)) * \
         (np.cos(abs(degree) * phi) if degree >= 0 else np.sin(abs(degree) * phi))

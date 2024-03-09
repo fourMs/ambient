@@ -7,3 +7,10 @@
 *.insv
 *.csv
 *.WAV
+*.aac
+*.reapeaks
+*.mov
+*.png
+*.aup3
+*.aup3-wal
+video360/playground.ipynb

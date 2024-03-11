@@ -1,0 +1,17 @@
+*.GLV
+*.MP4
+.DS_Store
+*.THM
+*.360
+*.LRV
+*.insv
+*.csv
+*.WAV
+*.aac
+*.reapeaks
+*.mov
+*.png
+*.aup3
+*.aup3-wal
+video360/playground.ipynb
+playground.ipynb

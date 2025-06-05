@@ -4,4 +4,4 @@
   - File modalities:
   - Approximate file size:
   - Where to find the files:
-  - Related publications:
+  - Related outputs:

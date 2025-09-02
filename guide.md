@@ -1,7 +1,24 @@
 # A guidance to all AMBIENT data
-- Data project name:
-  - Description:
-  - File modalities:
-  - Approximate file size:
-  - Where to find the files:
-  - Related outputs:
+- Data project name: SoundActions
+    - Description: 365 files of sound actions, collected during 2022 by Alexander
+    - File modalities: video, audio, manual labels
+    - Approximate file size: 
+    - Public releases of files:
+        - video files on osf: https://osf.io/3z65b/
+        - code and labels: https://github.com/fisheggg/soundactions
+    - Local files:
+        - code: `felles/Research/Users/jinyueg/SoundActions_fox`
+        - code: `[fox]/projects/ec12/jinyueg/SoundActions`
+    - Related outputs:
+- Data project name: StillStanding
+    - Description 365 days of standstill sessions in different soundscapes
+    - File modalities: video, audio, phone sensors (accelerometer, loudness meter, etc.), watch sensors (heartrate, etc), text reflections
+    - Approximate file size:
+    - Public release of files:
+        - sound-motion subset and analysis code: https://osf.io/tys3z/
+        - main set (WIP): https://osf.io/9qf2n/
+    - Local files:
+        - raw data: `felles/Research/Users/Alexander/Still Standing`
+        - osf upload prepare folder: `felles/Research/Project/AMBIENT/stillstanding_osf`
+        - sound-motion subset code: 
+    - Related outputs:
